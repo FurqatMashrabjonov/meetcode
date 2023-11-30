@@ -35,3 +35,8 @@ Route::controller(SocialLoginController::class)
         Route::get('/{provider}/callback', 'handleProviderCallback')->name('social.callback');
     });
 
+
+Route::get('abort', function () {
+    abort(404);
+})->name('abort');
+
