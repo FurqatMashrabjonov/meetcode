@@ -93,13 +93,12 @@
                         </x-slot>
 
                         <x-slot name="content">
-                            <!-- Account Management -->
-                            <div class="block px-4 py-2 text-xs text-gray-400">
-                                {{ __('Manage Account') }}
-                            </div>
-
                             <x-dropdown-link href="{{ route('profile.show') }}">
                                 {{ __('Profile') }}
+                            </x-dropdown-link>
+
+                            <x-dropdown-link href="{{ url('/admin') }}">
+                                {{ __('Admin Panel') }}
                             </x-dropdown-link>
 
                             @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
@@ -163,6 +162,10 @@
                 <!-- Account Management -->
                 <x-responsive-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
                     {{ __('Profile') }}
+                </x-responsive-nav-link>
+                <!-- Admin Panel -->
+                <x-responsive-nav-link href="{{ url('/admin') }}">
+                    {{ __('Admin Panel') }}
                 </x-responsive-nav-link>
 
                 @if (Laravel\Jetstream\Jetstream::hasApiFeatures())

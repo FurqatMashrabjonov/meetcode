@@ -33,7 +33,7 @@
             </div>
 
             <div class="block mt-4">
-                @include('components.social-buttons')
+                <x-social-buttons />
             </div>
 
             <div class="flex items-center justify-end mt-4">

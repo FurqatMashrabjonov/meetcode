@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth\Social;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Laravel\Socialite\Facades\Socialite;
 
 class SocialLoginController extends Controller
@@ -36,7 +37,8 @@ class SocialLoginController extends Controller
             auth()->login($local_user);
             return redirect()->route('dashboard');
         }catch (\Exception $e) {
-           dd($e->getMessage());
+            Log::debug($e->getMessage());
+           return redirect()->route('login')->with('error', 'Serverda muammo yuz berdi');
         }
     }
 }
