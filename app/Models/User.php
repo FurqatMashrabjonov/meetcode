@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\File;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
@@ -65,6 +66,33 @@ class User extends Authenticatable implements FilamentUser
     protected $appends = [
         'profile_photo_url',
     ];
+
+
+    public function createUserDirectory(): void
+    {
+        $file_path = storage_path('codes/' . $this->id);
+
+        mkdir($file_path, 0777, true);
+        $programming_languages = ProgrammingLanguage::query()->get();
+
+        $input = fopen($file_path . '/input.txt', 'w');
+        $output = fopen($file_path . '/output.txt', 'w');
+
+        fclose($input);
+        fclose($output);
+
+        foreach ($programming_languages as $programming_language) {
+            mkdir($file_path . '/' . $programming_language->name, 0777, true);
+            $file = fopen($file_path . '/' . $programming_language->name . '/code.' . $programming_language->extension, 'w');
+            fclose($file);
+        }
+    }
+
+    public function deleteUserDirectory(): void
+    {
+        $file_path = storage_path('codes/' . $this->id);
+        File::deleteDirectory($file_path);
+    }
 
     public function isAdmin(): bool
     {

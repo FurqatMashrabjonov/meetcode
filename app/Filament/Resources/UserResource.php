@@ -6,7 +6,6 @@ use App\Enums\UserRole;
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
-use Filament\Forms;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -14,10 +13,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
+
 
 class UserResource extends Resource
 {
@@ -44,7 +40,8 @@ class UserResource extends Resource
                     ])
                     ->required(),
                 TextInput::make('password')
-                    ->required()
+                    ->password()
+                    ->autocomplete('new-password')
             ]);
     }
 
@@ -65,10 +62,6 @@ class UserResource extends Resource
                     ->searchable()->sortable(),
                 TextColumn::make('created_at')->label('Registered At')
                     ->since()->sortable(),
-                TextColumn::make('Github Connected')->exists([
-                        'github' => fn (Builder $query) => $query->where('provider', 'github'),
-                    ])
-                    ->sortable(),
             ])
             ->filters([
                 //
@@ -86,7 +79,7 @@ class UserResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+
         ];
     }
 
