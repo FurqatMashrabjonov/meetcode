@@ -75,16 +75,16 @@ class User extends Authenticatable implements FilamentUser
         mkdir($file_path, 0777, true);
         $programming_languages = ProgrammingLanguage::query()->get();
 
-        $input = fopen($file_path . '/input.txt', 'w');
-        $output = fopen($file_path . '/output.txt', 'w');
-
-        fclose($input);
-        fclose($output);
-
         foreach ($programming_languages as $programming_language) {
             mkdir($file_path . '/' . $programming_language->name, 0777, true);
             $file = fopen($file_path . '/' . $programming_language->name . '/code.' . $programming_language->extension, 'w');
             fclose($file);
+
+            $input = fopen($file_path . '/' . $programming_language->name . '/input.txt', 'w');
+            $output = fopen($file_path . '/' . $programming_language->name . '/output.txt', 'w');
+
+            fclose($input);
+            fclose($output);
         }
     }
 

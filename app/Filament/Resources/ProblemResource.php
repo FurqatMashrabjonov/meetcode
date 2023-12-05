@@ -23,7 +23,6 @@ class ProblemResource extends Resource
     {
         return $form
             ->schema([
-                //
             ]);
     }
 
@@ -31,7 +30,9 @@ class ProblemResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('id')->label('ID'),
+                Tables\Columns\TextColumn::make('title')->label('Title'),
+                Tables\Columns\TextColumn::make('slug')->label('Slug'),
             ])
             ->filters([
                 //

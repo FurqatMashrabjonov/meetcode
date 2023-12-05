@@ -45,6 +45,6 @@ class RunCodeCommand extends Command
         $runner = new CodeRunner();
         $runner->setUser($user)->setLanguage($lang)->setCode($code);
         $res = $runner->runCode();
-        $this->info($res['output']);
+        $this->info(json_encode($res));
     }
 }
