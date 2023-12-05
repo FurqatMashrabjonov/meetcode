@@ -19,9 +19,6 @@ return new class extends Migration
             $table->string('title');
             $table->text('description');
             $table->string('starter_code');
-            $table->string('template_code');
-            $table->string('input');
-            $table->string('output');
             $table->string('image')->nullable();
             $table->string('status')->default(ProblemStatus::ACTIVE);
             $table->timestamps();

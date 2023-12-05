@@ -38,6 +38,7 @@ class CodeRunner
         $output = Process::timeout(5)
             ->path(storage_path('codes/' . $this->user->id . '/' . $this->language->name))
             ->run($command);
+
         return [
             'output' => $output->output(),
             'error' => $output->errorOutput()
@@ -49,5 +50,9 @@ class CodeRunner
         $path = storage_path('codes/' . $this->user->id . '/' . $this->language->name . '/code.' . $this->language->extension);
         file_put_contents($path, $this->code);
         return $path;
+    }
+
+    public static function doSomething(){
+        return 'something';
     }
 }

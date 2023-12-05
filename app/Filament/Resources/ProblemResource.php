@@ -3,15 +3,18 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ProblemResource\Pages;
-use App\Filament\Resources\ProblemResource\RelationManagers;
 use App\Models\Problem;
-use Filament\Forms;
+use App\Models\ProblemCategory;
+use App\Models\ProgrammingLanguage;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Tabs;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ProblemResource extends Resource
 {
@@ -23,7 +26,30 @@ class ProblemResource extends Resource
     {
         return $form
             ->schema([
-            ]);
+                Tabs::make('Tabs')
+                    ->tabs([
+                        Tabs\Tab::make('Main Settings')
+                            ->schema([
+                                Select::make('problem_category_id')
+                                    ->options(
+                                        ProblemCategory::all()->pluck('name', 'id')
+                                    )
+                                    ->required(),
+                                TextInput::make('title')->required()->autofocus(),
+                                TextInput::make('slug')->required(),
+                            ]),
+                        Tabs\Tab::make('Description')
+                            ->schema([
+                                RichEditor::make('description')->required(),
+                            ]),
+                        Tabs\Tab::make('Starter Code')
+                            ->schema([
+                                Textarea::make('starter_code')
+                                    ->rows(20)
+                                    ->required(),
+                            ]),
+                    ])
+            ])->columns(1);
     }
 
     public static function table(Table $table): Table
